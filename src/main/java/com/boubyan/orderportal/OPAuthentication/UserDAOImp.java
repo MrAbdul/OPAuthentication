@@ -11,10 +11,10 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
 
-import org.redisson.Redisson;
-import org.redisson.api.RBucket;
-import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
+//import org.redisson.Redisson;
+//import org.redisson.api.RBucket;
+//import org.redisson.api.RedissonClient;
+//import org.redisson.config.Config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,39 +33,39 @@ import com.boubyan.orderportal.OPAuthentication.models.User;
 public class UserDAOImp extends JdbcDaoSupport implements UserDAO {
 	private static final Logger logger = LoggerFactory.getLogger(UserDAOImp.class);
 	
-	@Value("${redisson.file}")
-	String redissonConfigUri;
+//	@Value("${redisson.file}")
+//	String redissonConfigUri;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	@Bean(destroyMethod = "shutdown")
-	public RedissonClient redissonClient() throws IOException{
-		String configFileName = redissonConfigUri;
-		File resourceURL = ResourceUtils.getFile(configFileName);
-		Config config =Config.fromYAML(resourceURL);
-		return Redisson.create(config);
-	}
-	@PreDestroy
-	private void clean() {
-		Rclient.shutdown();
-	}
+//	@Bean(destroyMethod = "shutdown")
+//	public RedissonClient redissonClient() throws IOException{
+//		String configFileName = redissonConfigUri;
+//		File resourceURL = ResourceUtils.getFile(configFileName);
+//		Config config =Config.fromYAML(resourceURL);
+//		return Redisson.create(config);
+//	}
+//	@PreDestroy
+//	private void clean() {
+//		Rclient.shutdown();
+//	}
 
 	@Autowired
 	DataSource dataSource;
 
-	private RedissonClient Rclient;
+//	private RedissonClient Rclient;
 	
 	@PostConstruct
 	private void initialize() {
 		setDataSource(dataSource);
-		logger.info("config file is at " +redissonConfigUri);
-			logger.info("Post Construct : constructed");
-		try {
-			Rclient = redissonClient();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		logger.info("config file is at " +redissonConfigUri);
+//			logger.info("Post Construct : constructed");
+//		try {
+//			Rclient = redissonClient();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	
 
 	}
@@ -89,11 +89,12 @@ public class UserDAOImp extends JdbcDaoSupport implements UserDAO {
 				usr.setId(rs.getString("id"));
 				usr.setName(rs.getString("Name"));
 				usr.setPassword(rs.getString("password"));
+				usr.setRole(rs.getString("role"));
 				if(passwordEncoder.matches(password, usr.getPassword())) {
-					RBucket<User> rbucket;
-
-					rbucket = Rclient.getBucket(usr.getId());
-					rbucket.set(usr,1,TimeUnit.HOURS);
+//					RBucket<User> rbucket;
+//
+//					rbucket = Rclient.getBucket(usr.getId());
+//					rbucket.set(usr,1,TimeUnit.HOURS);
 			
 				
 				return usr;

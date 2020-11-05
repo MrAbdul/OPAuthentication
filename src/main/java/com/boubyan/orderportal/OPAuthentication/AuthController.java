@@ -65,7 +65,9 @@ public class AuthController {
 			user.setJwt(jwtTokenUtil.createJWT(user.getId(), user.getName(), user.getEmail(),user.getRole()));
 			HashMap<String, String> response = new HashMap<String, String>();
 			rmhelper.sendMessage("Login", "Loged_in_ok_id: "+ user.getId());
+			
 			response.put("token", user.getJwt());
+			response.put("exp", jwtTokenUtil.timeToExpire(user.getJwt())+"");
 			return ResponseEntity.ok(response);
 		} else {
 //			logger.info("User is null: " + userLogin.getEmail());
@@ -111,6 +113,7 @@ public class AuthController {
 				HashMap<String, String> response = new HashMap<String, String>();
 				response.put("token", jwt);
 				response.put("msg","REGISTERED_SUCCSUFLY" );
+				response.put("exp", jwtTokenUtil.timeToExpire(jwt)+"");
 				rmhelper.sendMessage("Register", "ok: "+id);
 
 				return ResponseEntity.ok(response);

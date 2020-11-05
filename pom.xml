@@ -84,13 +84,14 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.redisson/redisson-spring-boot-starter-->
+		<!-- https://mvnrepository.com/artifact/org.redisson/redisson-spring-boot-starter
 		
 		<dependency>
 			<groupId>org.redisson</groupId>
 			<artifactId>redisson-spring-boot-starter</artifactId>
 			<version>3.13.6</version>
 		</dependency>
+		-->
 		 
     <dependency>
         <groupId>org.springframework.boot</groupId>

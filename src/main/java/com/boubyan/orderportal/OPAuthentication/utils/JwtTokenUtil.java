@@ -52,6 +52,7 @@ public class JwtTokenUtil implements Serializable {
 		return jwtToken;
 	}
 	
+	
 	public  Jws<Claims> parseJwt(String jwtString) {
 		
 		String secretCode = secret;
@@ -60,6 +61,13 @@ public class JwtTokenUtil implements Serializable {
 		Jws<Claims> jwt = Jwts.parser().setSigningKey(hmacKey).parseClaimsJws(jwtString);
 
 		return jwt;
+	}
+	public long timeToExpire(String jwtString) {
+		Jws<Claims> claims=parseJwt(jwtString);
+		Date expDate = claims.getBody().getExpiration();
+		
+		return expDate.getTime();
+		
 	}
 
 //	// retrieve username from jwt token
